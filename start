@@ -1,0 +1,59 @@
+import java.io.IOException;
+import java.util.Scanner;
+import java.util.Locale;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        // Garante o uso do ponto (.) como separador decimal
+        Locale.setDefault(Locale.US);
+        Scanner input = new Scanner(System.in);
+
+        // Lê o valor em double
+        double valorInput = input.nextDouble();
+        
+        // Converte para centavos (inteiro) somando 0.5 para evitar erros de arredondamento
+        int centavos = (int) Math.round(valorInput * 100);
+
+        // Array com os valores das notas convertidos para centavos
+        int[] notas = {10000, 5000, 2000, 1000, 500, 200};
+        // Array com os valores das moedas convertidos para centavos
+        int[] moedas = {100, 50, 25, 10, 5, 1};
+
+        System.out.println("NOTAS:");
+        for (int nota : notas) {
+            int qtdNotas = centavos / nota;
+            System.out.printf("%d nota(s) de R$ %.2f\n", qtdNotas, nota / 100.0);
+            centavos %= nota; // O que sobrou vira o novo valor de centavos
+        }
+
+        System.out.println("MOEDAS:");
+        for (int moeda : moedas) {
+            int qtdMoedas = centavos / moeda;
+            System.out.printf("%d moeda(s) de R$ %.2f\n", qtdMoedas, moeda / 100.0);
+            centavos %= moeda;
+        }
+
+        input.close();
+    }
+}
+
+
+
+
+*/
+Este é o clássico problema "Notas e Moedas" do beecrowd (Problema 1021). O maior desafio aqui é que 
+variáveis do tipo double sofrem com erros de precisão de ponto flutuante no computador. Se você usar 
+double diretamente para fazer as contas, valores como 0.29 podem virar 0.28999999, fazendo o código 
+errar o cálculo das moedas por um centavo.A solução ideal é multiplicar o valor por 100 e transformar 
+tudo em centavos (inteiros). Assim, os erros de precisão desaparecem.Aqui está o código Java completo e 
+corrigido para este problema:
+
+Por que essa lógica funciona perfeitamente?Math.round(valorInput * 100): Transforma, por exemplo, 576.73 
+no número inteiro 57673.Arrays em centavos: A nota de 100.00 vira 10000 centavos. A moeda de 0.25 vira 25 
+centavos.Operadores / e %: A divisão inteira (/) diz quantas notas cabem naquele valor. O resto da divisão 
+(%) atualiza o saldo que sobrou para a próxima nota ou moeda.nota / 100.0: Na hora de imprimir, dividimos 
+por 100.0 para exibir o formato original com duas casas decimais (%.2f).Para continuarmos praticando para 
+maratonas de programação ou plataformas online, me diga se você gostaria de:Aprender a usar o BufferedReader 
+para deixar a leitura de dados muito mais rápida.Entender melhor como os erros de precisão de ponto flutuante 
+acontecem no Java.Resolver outro problema clássico de estrutura sequencial ou matemática.
+*/
